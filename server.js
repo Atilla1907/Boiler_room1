@@ -54,3 +54,40 @@ app.get("/signup", (req, res) => {
         </form>
     `);
 });
+
+// handle the registrations
+
+app.post("/register", (req, res) => {
+    const email = req.body.email;
+    const clientIP = GetmyClientIP(req);
+    const database = LoadmyData();
+
+    // checks if user already exists
+    const existingUser = database.users.find(u => u.email === email);
+    if (existingUser) {
+        return res.send(`
+           <p>Welcome back, ${email}!</p>
+           <pre>${JSON.stringify(existingUser.attributions, null, 2)}</pre>
+        `);
+    }
+
+    // Looks up the attributions by IP
+
+    let campaigninfo = database.pendingAttributions[clientIP] || null;
+    delete database.pendingAttributions[clientIP]; // clean up
+
+    // Save user
+    const newUser = {
+        email,
+        attributions: campaigninfo,
+        registerAt: new Date(),
+    };
+
+    database.users.push(newUser);
+    SavemyData(database);
+
+    res.send(`
+        <p>Thanks for registering, ${email}!</p>
+        <pre>${JSON.stringify(newUser, null, 2)}</pre>
+    `);
+});
