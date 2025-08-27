@@ -18,3 +18,13 @@ function LoadmyData() {
 function SavemyData(data) {
     fs.writeFileSync("database.json", JSON.stringify(data, null, 2));
 }
+
+//help to get the client's IP
+
+function GetmyClientIP(req) {
+    return(
+        req.headers["x-forwarded-for"]?.split(",").shift() || 
+        req.socket?.remoteAddress
+    );
+}
+
