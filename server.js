@@ -91,3 +91,8 @@ app.post("/register", (req, res) => {
         <pre>${JSON.stringify(newUser, null, 2)}</pre>
     `);
 });
+
+// for starting the server
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
