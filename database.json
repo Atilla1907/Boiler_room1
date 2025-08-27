@@ -1,10 +1,4 @@
 {
-  "users": [
-    {
-      "email": "mengshen@gmail.com",
-      "attributions": null,
-      "registerAt": "2025-08-27T11:15:44.587Z"
-    }
-  ],
-  "pendingAttributions": []
+  "users": [],
+  "pendingAttributions": {}
 }
